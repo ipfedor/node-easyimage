@@ -1,5 +1,5 @@
-var imagickPath = '';
-var exe = '';
+
+var imagickPath = {convert: 'convert', identify : 'identify'};
 var Q = require('q');
 var exec = require('child_process').execFile;
 var command = require('child_process').exec;
@@ -9,16 +9,20 @@ var path = require('path');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 
-// check if ImageMagick is available on the system
-command(imagickPath + 'convert' + exe + ' -version', function(err, stdout, stderr) {
+module.exports = function(options) {
+    imagickPath = options.imagickPath && options.imagickPath.convert ? options.imagickPath : imagickPath;
 
-	// ImageMagick is NOT available on the system, exit with download info
-	if (err) {
-		console.log(' ImageMagick Not Found'.red)
-		console.log(' EasyImage requires ImageMagick to work. Install it from http://www.imagemagick.org/script/binary-releases.php.\n')
-	}
+	// check if ImageMagick is available on the system
+	command(imagickPath.convert + ' -version', function(err, stdout, stderr) {
 
-})
+		// ImageMagick is NOT available on the system, exit with download info
+		if (err) {
+			console.log(' ImageMagick Not Found'.red)
+			console.log(' EasyImage requires ImageMagick to work. Install it from http://www.imagemagick.org/script/binary-releases.php.\n')
+		}
+
+	})
+};
 
 var error_messages = {
 	'path': 'Missing image paths.\nMake sure both source and destination files are specified.',
@@ -53,7 +57,7 @@ function info(file) {
 	args.push('%m %z %w %h %b %x %y %f')
 	args.push(file)
 
-	child = exec(imagickPath + 'identify' + exe, args, function(err, stdout, stderr) {
+	child = exec(imagickPath.identify, args, function(err, stdout, stderr) {
 		var info = {};
 		//console.log(stdout)
 		//Basic error handling
@@ -159,7 +163,7 @@ exports.convert = function(options) {
 
 		args.push(options.dst)
 
-		child = exec(imagickPath + 'convert' + exe, args, function(err, stdout, stderr) {
+		child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
 
 			if (err) deferred.reject(err);
 			else deferred.resolve(info(options.dst));
@@ -207,7 +211,7 @@ exports.rotate = function(options) {
 		}
 		args.push(options.dst)
 
-		child = exec(imagickPath + 'convert' + exe, args, function(err, stdout, stderr) {
+		child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			else deferred.resolve(info(options.dst));
 		});
@@ -264,7 +268,7 @@ exports.resize = function(options) {
 		}
     args.push(options.dst)
 
-		child = exec(imagickPath + 'convert' + exe, args, function(err, stdout, stderr) {
+		child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			deferred.resolve(info(options.dst));
 		});
@@ -321,7 +325,7 @@ exports.crop = function(options) {
 		}
     args.push(options.dst)
 
-		child = exec(imagickPath + 'convert' + exe, args, function(err, stdout, stderr) {
+		child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			deferred.resolve(info(options.dst));
 		});
@@ -385,7 +389,7 @@ exports.rescrop = function(options) {
 		}
     args.push(options.dst)
 
-		child = exec(imagickPath + 'convert' + exe, args, function(err, stdout, stderr) {
+		child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			deferred.resolve(info(options.dst));
 		});
@@ -460,7 +464,7 @@ exports.thumbnail = function(options) {
 			}
 	    args.push(options.dst)
 
-			child = exec(imagickPath + 'convert' + exe, args, function(err, stdout, stderr) {
+			child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
 				if (err) return deferred.reject(err);
 				deferred.resolve(info(options.dst));
 			});
@@ -488,11 +492,5 @@ exports.exec = function(cmd) {
 	})
 
 	return deferred.promise;
-};
-
-module.exports = function(options) {
-    imagickPath = options.imagickPath ? options.imagickPath : '';
-    if (imagickPath)
-        exe = '.exe';
 };
 
