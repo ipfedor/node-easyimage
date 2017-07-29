@@ -1,3 +1,4 @@
+var imagickPath = '';
 var Q = require('q');
 var exec = require('child_process').execFile;
 var command = require('child_process').exec;
@@ -8,7 +9,7 @@ var fs = require('fs');
 var mkdirp = require('mkdirp');
 
 // check if ImageMagick is available on the system
-command('convert -version', function(err, stdout, stderr) {
+command(imagickPath + 'convert -version', function(err, stdout, stderr) {
 
 	// ImageMagick is NOT available on the system, exit with download info
 	if (err) {
@@ -51,7 +52,7 @@ function info(file) {
 	args.push('%m %z %w %h %b %x %y %f')
 	args.push(file)
 
-	child = exec('identify', args, function(err, stdout, stderr) {
+	child = exec(imagickPath + 'identify', args, function(err, stdout, stderr) {
 		var info = {};
 		//console.log(stdout)
 		//Basic error handling
@@ -157,7 +158,7 @@ exports.convert = function(options) {
 
 		args.push(options.dst)
 
-		child = exec('convert', args, function(err, stdout, stderr) {
+		child = exec(imagickPath + 'convert', args, function(err, stdout, stderr) {
 
 			if (err) deferred.reject(err);
 			else deferred.resolve(info(options.dst));
@@ -205,7 +206,7 @@ exports.rotate = function(options) {
 		}
 		args.push(options.dst)
 
-		child = exec('convert', args, function(err, stdout, stderr) {
+		child = exec(imagickPath + 'convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			else deferred.resolve(info(options.dst));
 		});
@@ -262,7 +263,7 @@ exports.resize = function(options) {
 		}
     args.push(options.dst)
 
-		child = exec('convert', args, function(err, stdout, stderr) {
+		child = exec(imagickPath + 'convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			deferred.resolve(info(options.dst));
 		});
@@ -319,7 +320,7 @@ exports.crop = function(options) {
 		}
     args.push(options.dst)
 
-		child = exec('convert', args, function(err, stdout, stderr) {
+		child = exec(imagickPath + 'convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			deferred.resolve(info(options.dst));
 		});
@@ -383,7 +384,7 @@ exports.rescrop = function(options) {
 		}
     args.push(options.dst)
 
-		child = exec('convert', args, function(err, stdout, stderr) {
+		child = exec(imagickPath + 'convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			deferred.resolve(info(options.dst));
 		});
@@ -458,7 +459,7 @@ exports.thumbnail = function(options) {
 			}
 	    args.push(options.dst)
 
-			child = exec('convert', args, function(err, stdout, stderr) {
+			child = exec(imagickPath + 'convert', args, function(err, stdout, stderr) {
 				if (err) return deferred.reject(err);
 				deferred.resolve(info(options.dst));
 			});
@@ -487,3 +488,8 @@ exports.exec = function(cmd) {
 
 	return deferred.promise;
 };
+
+module.exports = function(options) {
+    imagickPath = options.imagickPath ? options.imagickPath : '';
+};
+
