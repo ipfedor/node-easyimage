@@ -9,21 +9,6 @@ var path = require('path');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 
-module.exports = function(options) {
-    imagickPath = options.imagickPath && options.imagickPath.convert ? options.imagickPath : imagickPath;
-
-	// check if ImageMagick is available on the system
-	command(imagickPath.convert + ' -version', function(err, stdout, stderr) {
-
-		// ImageMagick is NOT available on the system, exit with download info
-		if (err) {
-			console.log(' ImageMagick Not Found'.red)
-			console.log(' EasyImage requires ImageMagick to work. Install it from http://www.imagemagick.org/script/binary-releases.php.\n')
-		}
-
-	})
-};
-
 var error_messages = {
 	'path': 'Missing image paths.\nMake sure both source and destination files are specified.',
 	'dim': 'Missing dimensions.\nSpecify the width atleast.',
@@ -104,7 +89,7 @@ function quoted_name(name) {
 
 
 // get basic information about an image file
-exports.info = function(file) {
+this.info = function(file) {
 	return info(file);
 };
 
@@ -132,7 +117,7 @@ function directoryCheck(options, command) {
 
 
 // convert a file type to another
-exports.convert = function(options) {
+this.convert = function(options) {
 
 	var deferred = Q.defer();
 
@@ -178,7 +163,7 @@ exports.convert = function(options) {
 
 
 // rotate a file
-exports.rotate = function(options) {
+this.rotate = function(options) {
 
 	var deferred = Q.defer();
 
@@ -224,7 +209,7 @@ exports.rotate = function(options) {
 };
 
 // resize an image
-exports.resize = function(options) {
+this.resize = function(options) {
 
 	var deferred = Q.defer();
 
@@ -280,7 +265,7 @@ exports.resize = function(options) {
 };
 
 // crop an image
-exports.crop = function(options) {
+this.crop = function(options) {
 
 	var deferred = Q.defer();
 
@@ -336,7 +321,7 @@ exports.crop = function(options) {
 };
 
 // resize and crop in one shot!
-exports.rescrop = function(options) {
+this.rescrop = function(options) {
 
 	var deferred = Q.defer();
 
@@ -401,7 +386,7 @@ exports.rescrop = function(options) {
 };
 
 // create thumbnails
-exports.thumbnail = function(options) {
+this.thumbnail = function(options) {
 
 	var deferred = Q.defer();
 
@@ -478,7 +463,7 @@ exports.thumbnail = function(options) {
 };
 
 // issue your own ImageMagick command
-exports.exec = function(cmd) {
+this.exec = function(cmd) {
 
 	var deferred = Q.defer();
 
@@ -492,5 +477,23 @@ exports.exec = function(cmd) {
 	})
 
 	return deferred.promise;
+};
+
+var _this = this;
+
+module.exports = function(options) {
+    imagickPath = options.imagickPath && options.imagickPath.convert ? options.imagickPath : imagickPath;
+
+	// check if ImageMagick is available on the system
+	command(imagickPath.convert + ' -version', function(err, stdout, stderr) {
+
+		// ImageMagick is NOT available on the system, exit with download info
+		if (err) {
+			console.log(' ImageMagick Not Found'.red)
+			console.log(' EasyImage requires ImageMagick to work. Install it from http://www.imagemagick.org/script/binary-releases.php.\n')
+		}
+
+	});
+	return _this;
 };
 
