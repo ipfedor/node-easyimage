@@ -237,14 +237,15 @@ this.resize = function(options) {
 			}	
 		}
 
+    if (options.coalesce) {
+    	args.push('-coalesce')
+    }
+
     args.push('-auto-orient')
     args.push('-resize')
     args.push(options.width + 'x' + options.height)
     if (options.ignoreAspectRatio) {
       args[args.length-1] += '!';
-    }
-    if (options.coalesce) {
-    	args.push('-coalesce')
     }
     if (options.quality) {
     	args.push('-quality')
@@ -253,6 +254,10 @@ this.resize = function(options) {
     if (options.background) {
         args.push('-background')
         args.push(options.background)
+    }
+    if (options.layers) {
+        args.push('-layers')
+        args.push(options.layers)
     }
     args.push(options.dst)
 
@@ -315,6 +320,10 @@ this.crop = function(options) {
 			args.push('-background')
 			args.push(options.background)
 		}
+    if (options.layers) {
+        args.push('-layers')
+        args.push(options.layers)
+    }
     args.push(options.dst)
 
 		child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
@@ -383,6 +392,10 @@ this.rescrop = function(options) {
 			args.push('-background')
 			args.push(options.background)
 		}
+    if (options.layers) {
+        args.push('-layers')
+        args.push(options.layers)
+    }
     args.push(options.dst)
 
 		child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
@@ -462,6 +475,10 @@ this.thumbnail = function(options) {
 				args.push('-background')
 				args.push(options.background)
 			}
+        if (options.layers) {
+            args.push('-layers')
+            args.push(options.layers)
+        }
 	    args.push(options.dst)
 
 			child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
