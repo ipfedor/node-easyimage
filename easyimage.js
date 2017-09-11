@@ -243,14 +243,17 @@ this.resize = function(options) {
     if (options.ignoreAspectRatio) {
       args[args.length-1] += '!';
     }
+    if (options.coalesce) {
+    	args.push('-coalesce')
+    }
     if (options.quality) {
     	args.push('-quality')
     	args.push(options.quality)
     }
- 		if (options.background) {
-			args.push('-background')
-			args.push(options.background)
-		}
+    if (options.background) {
+        args.push('-background')
+        args.push(options.background)
+    }
     args.push(options.dst)
 
 		child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
@@ -294,6 +297,10 @@ this.crop = function(options) {
 				args.push('-flatten')
 			}	
 		}
+
+    if (options.coalesce) {
+    	args.push('-coalesce')
+    }
 
     args.push('-auto-orient')
     args.push('-gravity')
@@ -356,6 +363,10 @@ this.rescrop = function(options) {
 				args.push('-flatten')
 			}	
 		}
+
+    if (options.coalesce) {
+    	args.push('-coalesce')
+    }
 
     args.push('-auto-orient')
     args.push('-gravity')
@@ -428,6 +439,10 @@ this.thumbnail = function(options) {
 					args.push('-flatten')
 				}	
 			}
+
+        if (options.coalesce) {
+            args.push('-coalesce')
+        }
 
 	    args.push('-auto-orient')
 	    args.push('-gravity')
