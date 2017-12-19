@@ -47,7 +47,7 @@ function info(file) {
 		//console.log(stdout)
 		//Basic error handling
 		if (stdout) {
-      var temp = stdout.replace(/PixelsPerInch/g, '').replace(/PixelsPerCentimeter/g, '').replace(/Undefined/g, '').split(/\s+/g);
+            var temp = stdout.replace(/PixelsPerInch/g, '').replace(/PixelsPerCentimeter/g, '').replace(/Undefined/g, '').split(/\s+/g);
 
 			//Basic error handling:
 			if (temp.length < 7) {
@@ -240,6 +240,36 @@ this.resize = function(options) {
     if (options.coalesce) {
     	args.push('-coalesce')
     }
+    if (options.strip) {
+    	args.push('-strip')
+    }
+
+    if (options.samplingfactor) {
+    	args.push('-sampling-factor')
+        args.push(options.samplingfactor)
+    }
+
+    if (options.interlace) {
+    	args.push('-interlace')
+        args.push(options.interlace)
+    }
+
+    if (options.depth) {
+    	args.push('-depth')
+        args.push(options.depth)
+    }
+
+    if (options.define) {
+        if (Array.isArray(options.define)) {
+            for (var p=0; p<options.define.length; p++) {
+                args.push('-define')
+                args.push(options.define[i])
+            }
+        } else {
+            args.push('-define')
+            args.push(options.define)
+        }
+    }
 
     args.push('-auto-orient')
     args.push('-resize')
@@ -377,6 +407,36 @@ this.rescrop = function(options) {
     	args.push('-coalesce')
     }
 
+    if (options.strip) {
+    	args.push('-strip')
+    }
+
+    if (options.samplingfactor) {
+    	args.push('-sampling-factor')
+        args.push(options.samplingfactor)
+    }
+
+    if (options.interlace) {
+    	args.push('-interlace')
+        args.push(options.interlace)
+    }
+
+    if (options.depth) {
+    	args.push('-depth')
+        args.push(options.depth)
+    }
+
+    if (options.define) {
+        if (Array.isArray(options.define)) {
+            for (var p=0; p<options.define.length; p++) {
+                args.push('-define')
+                args.push(options.define[i])
+            }
+        } else {
+            args.push('-define')
+            args.push(options.define)
+        }
+    }
     args.push('-auto-orient')
     args.push('-gravity')
     args.push(options.gravity)
@@ -388,10 +448,10 @@ this.rescrop = function(options) {
     	args.push('-quality')
     	args.push(options.quality)
     }
- 		if (options.background) {
-			args.push('-background')
-			args.push(options.background)
-		}
+    if (options.background) {
+        args.push('-background')
+        args.push(options.background)
+    }
     if (options.layers) {
         args.push('-layers')
         args.push(options.layers)
