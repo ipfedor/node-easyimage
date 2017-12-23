@@ -266,7 +266,7 @@ this.resize = function(options) {
         if (Array.isArray(options.define)) {
             for (var p=0; p<options.define.length; p++) {
                 args.push('-define')
-                args.push(options.define[i])
+                args.push(options.define[p])
             }
         } else {
             args.push('-define')
@@ -433,7 +433,7 @@ this.rescrop = function(options) {
         if (Array.isArray(options.define)) {
             for (var p=0; p<options.define.length; p++) {
                 args.push('-define')
-                args.push(options.define[i])
+                args.push(options.define[p])
             }
         } else {
             args.push('-define')
