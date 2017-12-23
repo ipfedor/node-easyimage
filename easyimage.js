@@ -194,7 +194,10 @@ this.rotate = function(options) {
 			args.push('-background')
 			args.push(options.background)
 		}
-		args.push(options.dst)
+        if (options.predst) {
+            args.push(options.predst)
+        }
+        args.push(options.dst)
 
 		child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
