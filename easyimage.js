@@ -146,7 +146,11 @@ this.convert = function(options) {
 			}	
 		}
 
-		args.push(options.dst)
+        if (options.predst) {
+            args.push(options.predst + options.dst)
+        } else {
+            args.push(options.dst)
+        }
 
 		child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
 
@@ -195,9 +199,10 @@ this.rotate = function(options) {
 			args.push(options.background)
 		}
         if (options.predst) {
-            args.push(options.predst)
+            args.push(options.predst + options.dst)
+        } else {
+            args.push(options.dst)
         }
-        args.push(options.dst)
 
 		child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
@@ -292,7 +297,12 @@ this.resize = function(options) {
         args.push('-layers')
         args.push(options.layers)
     }
-    args.push(options.dst)
+
+    if (options.predst) {
+        args.push(options.predst + options.dst)
+    } else {
+        args.push(options.dst)
+    }
 
 		child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
@@ -357,7 +367,11 @@ this.crop = function(options) {
         args.push('-layers')
         args.push(options.layers)
     }
-    args.push(options.dst)
+    if (options.predst) {
+        args.push(options.predst + options.dst)
+    } else {
+        args.push(options.dst)
+    }
 
 		child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
@@ -459,7 +473,11 @@ this.rescrop = function(options) {
         args.push('-layers')
         args.push(options.layers)
     }
-    args.push(options.dst)
+    if (options.predst) {
+        args.push(options.predst + options.dst)
+    } else {
+        args.push(options.dst)
+    }
 
 		child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
@@ -542,7 +560,11 @@ this.thumbnail = function(options) {
             args.push('-layers')
             args.push(options.layers)
         }
-	    args.push(options.dst)
+        if (options.predst) {
+            args.push(options.predst + options.dst)
+        } else {
+            args.push(options.dst)
+        }
 
 			child = exec(imagickPath.convert, args, function(err, stdout, stderr) {
 				if (err) return deferred.reject(err);
