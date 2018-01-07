@@ -354,7 +354,7 @@ this.crop = function(options) {
     args.push('-gravity')
     args.push(options.gravity)
     if (options.repage) {
-        args.push(' -repage 0x0')
+        //args.push(' -repage 0x0')
     }
     args.push('-crop')
     args.push(options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y)
