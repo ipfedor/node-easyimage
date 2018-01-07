@@ -353,8 +353,14 @@ this.crop = function(options) {
     args.push('-auto-orient')
     args.push('-gravity')
     args.push(options.gravity)
+    if (options.repage) {
+        args.push('-repage 0x0')
+    }
     args.push('-crop')
     args.push(options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y)
+    if (options.repage) {
+        args.push('+repage')
+    }
     if (options.quality) {
     	args.push('-quality')
     	args.push(options.quality)
@@ -459,8 +465,14 @@ this.rescrop = function(options) {
     args.push(options.gravity)
     args.push('-resize')
     args.push(options.width + 'x' + options.height + options.fill)
+    if (options.repage) {
+        args.push('-repage 0x0')
+    }
     args.push('-crop')
     args.push(options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y)
+    if (options.repage) {
+        args.push('+repage')
+    }
     if (options.quality) {
     	args.push('-quality')
     	args.push(options.quality)
@@ -546,8 +558,14 @@ this.thumbnail = function(options) {
 	    args.push('-strip')
 	    args.push('-thumbnail')
 	    args.push(resizewidth + 'x' + resizeheight)
+        if (options.repage) {
+            args.push('-repage 0x0')
+        }
 	    args.push('-crop')
 	    args.push(options.width + 'x'+ options.height + '+' + options.x + '+' + options.y)
+        if (options.repage) {
+            args.push('+repage')
+        }
 	    if (options.quality) {
 	    	args.push('-quality')
 	    	args.push(options.quality)
