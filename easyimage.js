@@ -25,12 +25,16 @@ function info(file) {
 		var unit = {
 			B: 1,
 			KB: 1000,
+			KiB: 1000,
 			MB: 1000000,            // =1000^2
+			MiB: 1000000,            // =1000^2
 			GB: 1000000000,         // =1000^3
+			GiB: 1000000000,         // =1000^3
 			TB: 1000000000000       // =1000^4
+			TiB: 1000000000000       // =1000^4
 		};
 
-		var rx = /^(\d*\.?\d*)([KMGT]?B)$/;  // regex for extract the float value and its unit
+		var rx = /^(\d*\.?\d*)([KMGT]?i?B)$/;  // regex for extract the float value and its unit
 		var sizeArray = rx.exec(sizeString);
 
 		return parseFloat(sizeArray[1]) * unit[sizeArray[2]];
@@ -39,7 +43,7 @@ function info(file) {
 	//file = quoted_name(file);
 	// %z = depth, %m = type, %w = width, %h = height, %b = rounded filesize in byte, %f = filename, %x = density
 	var args = ['-format']
-	args.push('%m %z %w %h %b %x %y %f')
+	args.push('%m %z %w %h %b %x %y %f');
 	args.push(file)
 
 	child = exec(imagickPath.identify, args, function(err, stdout, stderr) {
