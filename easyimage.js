@@ -252,7 +252,7 @@ this.resize = function(options) {
     if (options.limit) {
         if (typeof options.limit === 'string') {
             args.push('-limit ' + options.limit);
-        if (Array.isArray(options.limit)) {
+        } else if (Array.isArray(options.limit)) {
             for(var q=0; q<options.limit.length; q++) {
                 args.push('-limit ' + options.limit[q]);
             }
@@ -363,7 +363,7 @@ this.crop = function(options) {
     if (options.limit) {
         if (typeof options.limit === 'string') {
             args.push('-limit ' + options.limit);
-        if (Array.isArray(options.limit)) {
+        } else if (Array.isArray(options.limit)) {
             for(var q=0; q<options.limit.length; q++) {
                 args.push('-limit ' + options.limit[q]);
             }
@@ -453,7 +453,7 @@ this.rescrop = function(options) {
     if (options.limit) {
         if (typeof options.limit === 'string') {
             args.push('-limit ' + options.limit);
-        if (Array.isArray(options.limit)) {
+        } else if (Array.isArray(options.limit)) {
             for(var q=0; q<options.limit.length; q++) {
                 args.push('-limit ' + options.limit[q]);
             }
@@ -583,7 +583,7 @@ this.thumbnail = function(options) {
         if (options.limit) {
             if (typeof options.limit === 'string') {
                 args.push('-limit ' + options.limit);
-            if (Array.isArray(options.limit)) {
+            } else if (Array.isArray(options.limit)) {
                 for(var q=0; q<options.limit.length; q++) {
                     args.push('-limit ' + options.limit[q]);
                 }
