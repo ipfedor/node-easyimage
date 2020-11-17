@@ -249,6 +249,16 @@ this.resize = function(options) {
 			}	
 		}
 
+    if (options.limit) {
+        if (typeof options.limit === 'string') {
+            args.push('-limit ' + options.limit);
+        if (Array.isArray(options.limit)) {
+            for(var q=0; q<options.limit.length; q++) {
+                args.push('-limit ' + options.limit[q]);
+            }
+        }
+    }
+
     if (options.coalesce) {
     	args.push('-coalesce')
     }
@@ -350,6 +360,16 @@ this.crop = function(options) {
 			}	
 		}
 
+    if (options.limit) {
+        if (typeof options.limit === 'string') {
+            args.push('-limit ' + options.limit);
+        if (Array.isArray(options.limit)) {
+            for(var q=0; q<options.limit.length; q++) {
+                args.push('-limit ' + options.limit[q]);
+            }
+        }
+    }
+
     if (options.coalesce) {
     	args.push('-coalesce')
     }
@@ -429,6 +449,16 @@ this.rescrop = function(options) {
 				args.push('-flatten')
 			}	
 		}
+
+    if (options.limit) {
+        if (typeof options.limit === 'string') {
+            args.push('-limit ' + options.limit);
+        if (Array.isArray(options.limit)) {
+            for(var q=0; q<options.limit.length; q++) {
+                args.push('-limit ' + options.limit[q]);
+            }
+        }
+    }
 
     if (options.coalesce) {
     	args.push('-coalesce')
@@ -549,6 +579,16 @@ this.thumbnail = function(options) {
 					args.push('-flatten')
 				}	
 			}
+
+        if (options.limit) {
+            if (typeof options.limit === 'string') {
+                args.push('-limit ' + options.limit);
+            if (Array.isArray(options.limit)) {
+                for(var q=0; q<options.limit.length; q++) {
+                    args.push('-limit ' + options.limit[q]);
+                }
+            }
+        }
 
         if (options.coalesce) {
             args.push('-coalesce')
